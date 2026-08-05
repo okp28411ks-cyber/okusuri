@@ -56,7 +56,11 @@ button {
 <body>
 
 <h1>製品登録</h1>
+<div id="userInfo"></div>
 
+<button onclick="logout()">
+ログアウト
+</button>
 
 <label>製品名（必須）</label>
 <input id="product_name">
@@ -93,6 +97,38 @@ const client = supabase.createClient(
   supabaseUrl,
   supabaseKey
 );
+  // ログイン確認とユーザー表示
+async function checkUser(){
+
+const {data} = await client.auth.getSession();
+
+
+if(!data.session){
+
+location.href="login.html";
+
+return;
+
+}
+
+
+document.getElementById("userInfo").innerHTML =
+"ログイン中：" + data.session.user.email;
+
+}
+
+
+checkUser();
+
+
+// ログアウト
+async function logout(){
+
+await client.auth.signOut();
+
+location.href="login.html";
+
+}
 // ログイン確認
 async function checkLogin(){
 
