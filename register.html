@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>製品登録</title>
+</head>
+
+<body>
+
+<h1>製品登録</h1>
+
+<p>製品名</p>
+<input id="product_name">
+
+<p>製薬会社</p>
+<input id="company">
+
+<p>ロット番号</p>
+<input id="lot_number">
+
+<p>備考</p>
+<textarea id="note"></textarea>
+
+<br><br>
+
+<button onclick="register()">登録</button>
+
+<p id="result"></p>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseUrl = "https://nmstudwvvmbttfhanuyu.supabase.co";
+const supabaseKey = "sb_publishable_DagUSgICo4JTVxwimcZKDw_NYBHPzSf";
+
+const client = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+
+async function register(){
+
+const { data, error } = await client
+.from("items")
+.insert([
+{
+product_name: document.getElementById("product_name").value,
+company: document.getElementById("company").value,
+lot_number: document.getElementById("lot_number").value,
+note: document.getElementById("note").value
+}
+])
+.select();
+
+
+if(error){
+
+document.getElementById("result").innerHTML =
+"エラー：" + error.message;
+
+return;
+
+}
+
+
+document.getElementById("result").innerHTML =
+"登録完了！番号：" + data[0].id;
+
+}
+
+</script>
+
+</body>
+</html>
