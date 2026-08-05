@@ -37,8 +37,7 @@ async function loadData() {
   }
 
   document.getElementById("result").innerHTML =
-    "番号：" + data.id + "<br>" +
-    "名前：" + data.name;
+   JSON.stringify(data);
 }
 
 loadData();
