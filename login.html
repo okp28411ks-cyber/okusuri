@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ログイン</title>
+
+<style>
+
+body{
+  font-family:sans-serif;
+  max-width:400px;
+  margin:40px auto;
+  padding:20px;
+}
+
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  font-size:16px;
+}
+
+button{
+  cursor:pointer;
+}
+
+#result{
+  margin-top:20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<h1>ログイン</h1>
+
+
+<input id="email" placeholder="メールアドレス">
+
+<input id="password" 
+type="password"
+placeholder="パスワード">
+
+
+<button onclick="login()">
+ログイン
+</button>
+
+
+<div id="result"></div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const supabaseUrl = "https://nmstudwvvmbttfhanuyu.supabase.co";
+const supabaseKey = "sb_publishable_DagUSgICo4JTVxwimcZKDw_NYBHPzSf";
+
+
+const client = supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+
+
+async function login(){
+
+
+const email =
+document.getElementById("email").value;
+
+
+const password =
+document.getElementById("password").value;
+
+
+
+const {data,error} =
+await client.auth.signInWithPassword({
+
+email: email,
+
+password: password
+
+});
+
+
+
+if(error){
+
+document.getElementById("result").innerHTML =
+"ログイン失敗：" + error.message;
+
+return;
+
+}
+
+
+
+location.href =
+"register.html";
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>
