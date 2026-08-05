@@ -5,8 +5,17 @@
   <title>番号ページ</title>
 </head>
 <body>
-  <h1>番号ページ</h1>
-  <p>番号：1</p>
-  <p>名前：テスト</p>
+
+<h1>番号ページ</h1>
+<div id="result">読み込み中...</div>
+
+<script>
+const id = location.pathname.replace("/", "");
+
+document.getElementById("result").innerHTML =
+  "番号：" + id;
+
+</script>
+
 </body>
 </html>
