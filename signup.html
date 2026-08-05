@@ -91,7 +91,8 @@ return;
 
 document.getElementById("result").innerHTML =
 "登録しました。メール確認をしてください。";
-
+setTimeout(() => {
+  location.href = "login.html";}, 2000);
 }
 
 </script>
