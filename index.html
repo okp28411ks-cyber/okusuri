@@ -25,7 +25,7 @@ const id = location.pathname.replace("/", "");
 async function loadData() {
 
   const { data, error } = await supabaseClient
-    .from("okusuri_kenkyu")
+    .from("items")
     .select("*")
     .eq("id", id)
     .single();
