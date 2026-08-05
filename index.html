@@ -2,19 +2,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>番号ページ</title>
+<title>製品情報</title>
 </head>
 
 <body>
 
-<h1>番号ページ</h1>
+<h1>製品情報</h1>
+
 <div id="result">読み込み中...</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-const supabaseUrl = "https://nmstudwvvmbttfhanuyu.supabase.co";
+const supabaseUrl = "https://nmstudwvvmbttfhanuyu.supabase.co/rest/v1/";
 const supabaseKey = "sb_publishable_DagUSgICo4JTVxwimcZKDw_NYBHPzSf";
 
 const client = supabase.createClient(
@@ -34,13 +35,17 @@ async function loadData(){
 
   if(error){
     document.getElementById("result").innerHTML =
-      "エラー：" + error.message;
+      "データがありません";
     return;
   }
 
-  document.getElementById("result").innerHTML =
-    "番号：" + data.id + "<br>" +
-    "名前：" + data.name;
+  document.getElementById("result").innerHTML = `
+    <p>番号：${data.id}</p>
+    <p>製品名：${data.product_name}</p>
+    <p>製薬会社：${data.company}</p>
+    <p>ロット番号：${data.lot_number}</p>
+    <p>備考：${data.note}</p>
+  `;
 
 }
 
