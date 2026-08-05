@@ -32,7 +32,7 @@ async function loadData() {
 
   if (error) {
     document.getElementById("result").innerHTML =
-      "データがありません";
+      error.massage;
     return;
   }
 
