@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>製品一覧</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+max-width:600px;
+margin:30px auto;
+padding:20px;
+}
+
+.item{
+border:1px solid #ccc;
+padding:15px;
+margin-top:10px;
+}
+
+button{
+padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>製品一覧</h1>
+
+<div id="list">
+読み込み中...
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const supabaseUrl = "あなたのAPI URL";
+const supabaseKey = "あなたのPublishable key";
+
+
+const client = supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+
+
+async function loadItems(){
+
+
+const {data,error} = await client
+.from("items")
+.select("*")
+.order("id");
+
+
+if(error){
+
+document.getElementById("list").innerHTML =
+"エラー：" + error.message;
+
+return;
+
+}
+
+
+let html="";
+
+
+data.forEach(item=>{
+
+
+html += `
+
+<div class="item">
+
+<h3>
+番号：${item.id}
+</h3>
+
+<p>
+製品名：${item.name || ""}
+</p>
+
+<p>
+製薬会社：${item.company || ""}
+</p>
+
+
+<a href="${item.id}">
+<button>
+詳細を見る
+</button>
+</a>
+
+
+</div>
+
+`;
+
+
+});
+
+
+document.getElementById("list").innerHTML = html;
+
+
+}
+
+
+loadItems();
+
+
+</script>
+
+
+</body>
+</html>
