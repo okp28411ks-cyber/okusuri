@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>番号ページ</title>
+<meta charset="UTF-8">
+<title>確認ページ</title>
 </head>
+
 <body>
 
-<h1>番号ページ</h1>
-<div id="result">読み込み中...</div>
+<h1>確認</h1>
+<div id="result">確認中...</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const supabaseUrl = "https://nmstudwvvmbttfhanuyu.supabase.co/rest/v1/";
-const supabaseKey = "sb_publishable_DagUSgICo4JTVxwimcZKDw_NYBHPzSf";
 
-const supabaseClient = supabase.createClient(
+const supabaseUrl = "あなたのAPI URL";
+const supabaseKey = "あなたのPublishable key";
+
+const client = supabase.createClient(
   supabaseUrl,
   supabaseKey
 );
 
-const id = 1;
+async function test(){
 
-async function loadData() {
+const { data, error } = await client
+.from("items")
+.select("*");
 
-  async function loadData() {
+if(error){
+ document.getElementById("result").innerHTML =
+ "エラー：" + error.message;
+ return;
+}
 
-  document.getElementById("result").innerHTML = "接続中...";
-
-  const { data, error } = await supabaseClient
-    .from("items")
-    .select("*");
-
-  if (error) {
-    document.getElementById("result").innerHTML =
-      "エラー：" + error.message;
-    return;
-  }
-
-  document.getElementById("result").innerHTML =
-    JSON.stringify(data);
+document.getElementById("result").innerHTML =
+JSON.stringify(data);
 
 }
-alert("ここまで動いています");
-loadData();
+
+test();
 
 </script>
 
