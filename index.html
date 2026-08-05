@@ -9,11 +9,39 @@
 <h1>番号ページ</h1>
 <div id="result">読み込み中...</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+const supabaseUrl = "https://nmstudwvvmbttfhanuyu.supabase.co/rest/v1/";
+const supabaseKey = "sb_publishable_DagUSgICo4JTVxwimcZKDw_NYBHPzSf";
+
+const supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
 const id = location.pathname.replace("/", "");
 
-document.getElementById("result").innerHTML =
-  "番号：" + id;
+async function loadData() {
+
+  const { data, error } = await supabaseClient
+    .from("あなたのテーブル名")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    document.getElementById("result").innerHTML =
+      "データがありません";
+    return;
+  }
+
+  document.getElementById("result").innerHTML =
+    "番号：" + data.id + "<br>" +
+    "名前：" + data.name;
+}
+
+loadData();
 
 </script>
 
