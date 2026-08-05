@@ -93,7 +93,20 @@ const client = supabase.createClient(
   supabaseUrl,
   supabaseKey
 );
+// ログイン確認
+async function checkLogin(){
 
+  const { data } = await client.auth.getSession();
+
+  if(!data.session){
+
+    location.href = "login.html";
+
+  }
+
+}
+
+checkLogin();
 
 async function register(){
 
