@@ -24,21 +24,23 @@ const id = 1;
 
 async function loadData() {
 
+  async function loadData() {
+
+  document.getElementById("result").innerHTML = "接続中...";
+
   const { data, error } = await supabaseClient
     .from("items")
-    .select("*")
-    console.log(id);
-    .eq("id", id)
-    .single();
+    .select("*");
 
   if (error) {
     document.getElementById("result").innerHTML =
-      error.massage;
+      "エラー：" + error.message;
     return;
   }
 
   document.getElementById("result").innerHTML =
-   JSON.stringify(data);
+    JSON.stringify(data);
+
 }
 
 loadData();
