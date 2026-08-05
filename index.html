@@ -27,6 +27,7 @@ async function loadData() {
   const { data, error } = await supabaseClient
     .from("items")
     .select("*")
+    console.log(id);
     .eq("id", id)
     .single();
 
