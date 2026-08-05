@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>確認ページ</title>
+<title>番号ページ</title>
 </head>
 
 <body>
 
-<h1>確認</h1>
-<div id="result">確認中...</div>
+<h1>番号ページ</h1>
+<div id="result">読み込み中...</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -22,24 +22,29 @@ const client = supabase.createClient(
   supabaseKey
 );
 
-async function test(){
+const id = location.pathname.replace("/", "");
 
-const { data, error } = await client
-.from("items")
-.select("*");
+async function loadData(){
 
-if(error){
- document.getElementById("result").innerHTML =
- "エラー：" + error.message;
- return;
+  const { data, error } = await client
+    .from("items")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if(error){
+    document.getElementById("result").innerHTML =
+      "エラー：" + error.message;
+    return;
+  }
+
+  document.getElementById("result").innerHTML =
+    "番号：" + data.id + "<br>" +
+    "名前：" + data.name;
+
 }
 
-document.getElementById("result").innerHTML =
-JSON.stringify(data);
-
-}
-
-test();
+loadData();
 
 </script>
 
